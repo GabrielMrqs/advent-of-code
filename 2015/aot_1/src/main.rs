@@ -4,11 +4,13 @@ use std::{
 };
 
 fn main() {
-    iterator_basement();
+    iterator_approach();
+    count_approach();
+    iterator_approach_basement();
 }
 
-fn iterator() {
-    let mut count: i32 = 0;
+fn iterator_approach() {
+    let mut floor: i32 = 0;
 
     if let Ok(file) = File::open("src/input.txt") {
         let reader = BufReader::new(file);
@@ -17,18 +19,18 @@ fn iterator() {
             if let Ok(line) = line {
                 for c in line.chars() {
                     match c {
-                        '(' => count = count + 1,
-                        ')' => count = count - 1,
+                        '(' => floor += 1,
+                        ')' => floor -= 1,
                         _ => break,
                     }
                 }
             }
         }
-        println!("{count}");
+        println!("{floor}");
     }
 }
 
-fn count() {
+fn count_approach() {
     if let Ok(file) = fs::read_to_string("src/input.txt") {
         let up_count = file.chars().filter(|&c| c == '(').count();
         let down_count = file.chars().filter(|&c| c == ')').count();
@@ -37,24 +39,23 @@ fn count() {
     }
 }
 
-fn iterator_basement() {
-    let mut count: i32 = 0;
+fn iterator_approach_basement() {
+    let mut floor: i32 = 0;
 
     if let Ok(file) = File::open("src/input.txt") {
         let reader = BufReader::new(file);
 
-        'principal: for line in reader.lines() {
+        'outer: for line in reader.lines() {
             if let Ok(line) = line {
-                for c in line.chars().into_iter().enumerate() {
-                    match c.1 {
-                        '(' => count = count + 1,
-                        ')' => count = count - 1,
+                for (position, char) in line.chars().into_iter().enumerate() {
+                    match char {
+                        '(' => floor += 1,
+                        ')' => floor -= 1,
                         _ => break,
                     }
-                    if count == -1 {
-                        let position = c.0 + 1;
-                        println!("entrou no porão na posição {position}");
-                        break 'principal;
+                    if floor == -1 {
+                        println!("{position}");
+                        break 'outer;
                     }
                 }
             }
