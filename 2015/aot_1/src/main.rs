@@ -4,13 +4,13 @@ use std::{
 };
 
 fn main() {
-    iterator_approach();
-    count_approach();
-    iterator_approach_basement();
+    part_one_iterator_approach();
+    part_one_count_approach();
+    part_two_iterator_approach();
 }
 
-fn iterator_approach() {
-    let mut floor: i32 = 0;
+fn part_one_iterator_approach() {
+    let mut floor = 0;
 
     if let Ok(file) = File::open("src/input.txt") {
         let reader = BufReader::new(file);
@@ -30,7 +30,7 @@ fn iterator_approach() {
     }
 }
 
-fn count_approach() {
+fn part_one_count_approach() {
     if let Ok(file) = fs::read_to_string("src/input.txt") {
         let up_count = file.chars().filter(|&c| c == '(').count();
         let down_count = file.chars().filter(|&c| c == ')').count();
@@ -39,8 +39,8 @@ fn count_approach() {
     }
 }
 
-fn iterator_approach_basement() {
-    let mut floor: i32 = 0;
+fn part_two_iterator_approach() {
+    let mut floor = 0;
 
     if let Ok(file) = File::open("src/input.txt") {
         let reader = BufReader::new(file);
